@@ -7,7 +7,7 @@
     android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@drawable/ankara_tab_background"
+    android:background="@drawable/tab_background"
     android:layout_marginTop="50dp"
     android:layout_marginStart="50dp"
     android:layout_marginEnd="50dp">
@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toStartOf="@id/guidelineCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/atakule"
+        app:srcCompat="@drawable/place_holder_image"
         app:layout_constraintDimensionRatio="1:1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

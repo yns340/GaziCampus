@@ -21,7 +21,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="50dp"
-                android:background="@drawable/ankara_rounded_background"
+                android:background="@drawable/bg_home"
                 android:scaleType="centerInside"
                 android:padding="15dp"
                 android:src="@drawable/home"
@@ -35,7 +35,7 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="50dp"
-                android:background="@drawable/ankara_rounded_background"
+                android:background="@drawable/bg_home"
                 android:fontFamily="sans-serif-medium"
                 android:text="ankara"
                 android:gravity="center"
@@ -50,68 +50,79 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottomPanel"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topPanel">
+
+        <Button
+            android:id="@+id/buttonTravel"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="#970000"
+            android:fontFamily="@font/allan"
+            android:text="GEZİ"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:icon="@drawable/airplane"
+            app:iconTint="@color/white"
+            app:iconSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topPanel">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/buttonTravel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginTop="100dp"
-                android:backgroundTint="#970000"
-                android:fontFamily="@font/allan"
-                android:text="GEZİ"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:icon="@drawable/airplane"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+        <Button
+            android:id="@+id/buttonEntertainment"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="#970000"
+            android:fontFamily="@font/allan"
+            android:text="ETKİNLİK"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:icon="@drawable/microphone"
+            app:iconTint="@color/white"
+            app:iconSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonTravel" />
 
-            <Button
-                android:id="@+id/buttonEntertainment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="50dp"
-                android:backgroundTint="#970000"
-                android:fontFamily="@font/allan"
-                android:text="ETKİNLİK"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:icon="@drawable/microphone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonTravel" />
-
-            <Button
-                android:id="@+id/buttonFood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="50dp"
-                android:backgroundTint="#970000"
-                android:fontFamily="@font/allan"
-                android:text="YEMEK"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:icon="@drawable/burger"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonEntertainment" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <Button
+            android:id="@+id/buttonFood"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="#970000"
+            android:fontFamily="@font/allan"
+            android:text="YEMEK / KAFE"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:icon="@drawable/burger"
+            app:iconTint="@color/white"
+            app:iconSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonEntertainment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

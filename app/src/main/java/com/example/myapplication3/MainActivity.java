@@ -1,44 +1,64 @@
 package com.example.myapplication3;
 
 import android.os.Bundle;
-import android.widget.Button;
-
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.content.res.ColorStateList;
+import android.widget.ImageButton;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    Button ankaraButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        // Bottom navigation view'u bulalım
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Renk seçicisini hem ikon hem de metin için uygulayın
+        ColorStateList colorStateList = getResources().getColorStateList(R.color.bottom_nav_item_color, getTheme());
+        bottomNavigationView.setItemIconTintList(colorStateList);
+        bottomNavigationView.setItemTextColor(colorStateList);
+
+        // İlk fragment'ı yükleyelim
+        loadFragment(new DuyuruFragment());
+        bottomNavigationView.setSelectedItemId(R.id.nav_anasayfa);
+
+        // Bottom Navigation için listener oluşturalım
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+
+            // Hangi menü öğesine tıklandığını belirleyelim
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_kulupler) {
+                fragment = new ClubsFragment();
+            } else if (itemId == R.id.nav_ders) {
+                fragment = new LessonsFragment();
+            } else if (itemId == R.id.nav_anasayfa) {
+                fragment = new DuyuruFragment();
+            } else if (itemId == R.id.nav_yemek) {
+                fragment = new FoodsFragment();
+            } else if (itemId == R.id.nav_ankara) {
+                fragment = new AnkaraFragment();
+            }
+
+            return loadFragment(fragment);
         });
+    }
 
-        ankaraButton = findViewById(R.id.AnkaraButton);
-
-        ankaraButton.setOnClickListener(v -> {
-            // Yeni fragment oluştur
-            Fragment ankaraFragment = new AnkaraFragment();
-
-            // Geçişi yap
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, ankaraFragment);
-            transaction.addToBackStack(null); // Geri tuşu ile geri dönebilmek için
-            transaction.commit();
-        });
+    // Fragment yükleme fonksiyonu
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }
