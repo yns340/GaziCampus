@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/KulupDetayPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context=".KulupSayfasiFragment">
+
+    <!-- ÜST PANEL -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#970000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1">
+
+        <ImageButton
+            android:id="@+id/HomeButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_home"
+            android:src="@drawable/home"
+            android:padding="15dp"
+            android:scaleType="centerInside"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Geri dön"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/headTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="Kulüp Adı"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/HomeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- KULÜP LOGO -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/kulupLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:src="@drawable/profile"
+        android:background="@drawable/bg_home"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        app:layout_constraintTop_toBottomOf="@id/topPanel"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- KULÜP ADI -->
+    <TextView
+        android:id="@+id/kulupId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="ACM GAZİ"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@id/kulupLogo"
+        app:layout_constraintBottom_toBottomOf="@id/kulupLogo"
+        app:layout_constraintStart_toEndOf="@id/kulupLogo"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- AÇIKLAMA -->
+    <TextView
+        android:id="@+id/kulupAciklama"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Kulüp hakkında açıklama burada yer alır."
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/kulupLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- RECYCLER VIEW -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/etkinlikRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:contentDescription="Etkinliklerin listelendiği alan"
+        app:layout_constraintTop_toBottomOf="@id/kulupAciklama"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
