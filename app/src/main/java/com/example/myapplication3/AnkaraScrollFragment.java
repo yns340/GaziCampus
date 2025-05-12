@@ -22,14 +22,23 @@ import java.util.ArrayList;
 
 public class AnkaraScrollFragment extends Fragment {
 
+    private static final String ARG_EVENT_LIST = "eventList";
+    private static final String ARG_PLACES_LIST = "placesList";
+    private static final String ARG_FOODS_LIST = "foodsList";
     private LinearLayout tabContainer;
-    private ArrayList<Place> placesList;
-    private ArrayList<Place> foodsList;
-    private ArrayList<Place> itemList;
-
+    private ArrayList<Place> placeList;  // placeList ve foodsList, Place nesnesi türünde olacak
+    private ArrayList<AnkaraEvent> eventList;
 
     public AnkaraScrollFragment() {
         // Boş constructor (zorunlu)
+    }
+
+    public static AnkaraScrollFragment newInstance(ArrayList<AnkaraEvent> eventList) {
+        AnkaraScrollFragment fragment = new AnkaraScrollFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_EVENT_LIST, eventList);  // Event list'ini argüman olarak gönderiyoruz
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -53,26 +62,24 @@ public class AnkaraScrollFragment extends Fragment {
             bottomNavigationView.setSelectedItemId(R.id.nav_anasayfa);
         });
 
-        itemList = new ArrayList<>();
+        placeList = new ArrayList<>();
+        eventList = new ArrayList<>();
 
         // Bundle'dan verileri al
         if (getArguments() != null) {
-            // Check for placesList first
-            if (getArguments().containsKey("placesList")) {
-                itemList = (ArrayList<Place>) getArguments().getSerializable("placesList");
+            // API'den gelen veriler (AnkaraEvent listesi)
+            if (getArguments().containsKey(ARG_EVENT_LIST)) {
+                eventList = (ArrayList<AnkaraEvent>) getArguments().getSerializable(ARG_EVENT_LIST);
             }
-            // Then check for foodsList
-            else if (getArguments().containsKey("foodsList")) {
-                itemList = (ArrayList<Place>) getArguments().getSerializable("foodsList");
-            } else {
-                // If neither is found, initialize an empty list to avoid null pointer
-                itemList = new ArrayList<>();
+            // placesList (Place nesnelerinden gelen veriler)
+            else if (getArguments().containsKey(ARG_PLACES_LIST)) {
+                placeList = (ArrayList<Place>) getArguments().getSerializable(ARG_PLACES_LIST);
             }
-        } else {
-            // If no arguments, initialize an empty list
-            itemList = new ArrayList<>();
+            // foodsList (Place nesnelerinden gelen veriler)
+            else if (getArguments().containsKey(ARG_FOODS_LIST)) {
+                placeList = (ArrayList<Place>) getArguments().getSerializable(ARG_FOODS_LIST);
+            }
         }
-
 
         createTabs(inflater);
 
@@ -88,16 +95,58 @@ public class AnkaraScrollFragment extends Fragment {
 
 
     private void createTabs(LayoutInflater inflater) {
-        if (itemList != null && !itemList.isEmpty()) {
-            for (Place place : itemList) {
+        if (eventList != null && !eventList.isEmpty()) {
+            for (AnkaraEvent event : eventList) {
                 View tabView = inflater.inflate(R.layout.fragment_ankara_tabs, tabContainer, false);
 
                 TextView titleTextView = tabView.findViewById(R.id.textView);
-                RatingBar ratingBar = tabView.findViewById(R.id.ratingBar);
-                ImageView imageView = tabView.findViewById(R.id.imageView);
+                titleTextView.setText(event.getName()); // 'isim' yerine 'name' kullanıyoruz
 
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+                layoutParams.setMargins(25, 25, 25, 25);
+                tabView.setLayoutParams(layoutParams);
+
+                // RatingBar ve TextView Content kontrolü
+                RatingBar ratingBar = tabView.findViewById(R.id.ratingBar);
+
+                // API'den geldiği için rating yerine contentTextView'i göster
+                if (event != null)
+                    ratingBar.setVisibility(View.GONE);  // RatingBar'ı gizle
+
+                tabView.setOnClickListener(v -> {
+                    // Yeni bir fragment açarak detayları göster
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("event", event);  // event nesnesini bundle'a ekliyoruz
+
+                    Fragment ankaraPageFragment = new AnkaraItemPageFragment();
+                    ankaraPageFragment.setArguments(bundle);  // Bundle'ı fragmente ekle
+
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentContainer, ankaraPageFragment)
+                            .addToBackStack(null)
+                            .commit();
+                });
+
+                tabContainer.addView(tabView);
+            }
+        }
+        // Eğer placeList veya foodsList varsa, Place nesnesine göre işlem yap
+        else if (placeList != null && !placeList.isEmpty()) {
+            for (Place place : placeList) {
+                View tabView = inflater.inflate(R.layout.fragment_ankara_tabs, tabContainer, false);
+
+                TextView titleTextView = tabView.findViewById(R.id.textView);
                 titleTextView.setText(place.getTitle());
-                ratingBar.setRating((float) place.getRating());
+
+                RatingBar rating = tabView.findViewById(R.id.ratingBar);
+                rating.setRating((float)place.getRating());
+
+                ImageView imageView = tabView.findViewById(R.id.imageView);
                 if (place.getImagePath() != null) {
                     try {
                         // assets/image/ dosyasındaki resim dosyasını yükle
@@ -110,6 +159,7 @@ public class AnkaraScrollFragment extends Fragment {
                         imageView.setImageResource(R.drawable.place_holder_image);
                     }
                 }
+
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -119,8 +169,9 @@ public class AnkaraScrollFragment extends Fragment {
                 tabView.setLayoutParams(layoutParams);
 
                 tabView.setOnClickListener(v -> {
+                    // Yeni bir fragment açarak detayları göster
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("place", place);
+                    bundle.putSerializable("place", place);  // place nesnesini bundle'a ekliyoruz
 
                     Fragment ankaraPageFragment = new AnkaraItemPageFragment();
                     ankaraPageFragment.setArguments(bundle);  // Bundle'ı fragmente ekle

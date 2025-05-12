@@ -30,35 +30,43 @@ public class AnkaraItemPageFragment extends Fragment {
 
         // Bundle'dan Place nesnesini al
         if (getArguments() != null) {
-            Place place = (Place) getArguments().getSerializable("place");
-
-            // Verileri kullan (örneğin, başlık ve puanı göstermek)
-            TextView headTitleTextView = view.findViewById(R.id.headTextView);
-            headTitleTextView.setText(place.getTitle());
-
-            RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-            ratingBar.setRating((float) place.getRating());
-
-            TextView ratingText = view.findViewById(R.id.ratingTextView);
-            ratingText.setText(String.valueOf(place.getRating()));
-
-            ImageView imageView = view.findViewById(R.id.imageView);
-            if (place.getImagePath() != null) {
-                try {
-                    // assets/image/ dosyasındaki resim dosyasını yükle
-                    InputStream inputStream = requireContext().getAssets().open(place.getImagePath());
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    imageView.setImageBitmap(bitmap);
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    imageView.setImageResource(R.drawable.place_holder_image);
+            if (getArguments().containsKey("event")) {
+                AnkaraEvent event = (AnkaraEvent) getArguments().getSerializable("event");
+                if (event != null) {
+                    TextView headTitleTextView = view.findViewById(R.id.headTextView);
+                    headTitleTextView.setText(event.getName());
                 }
             }
+            else if (getArguments().containsKey("place")) {
+                Place place = (Place) getArguments().getSerializable("place");
 
-            TextView locationText = view.findViewById(R.id.locationTextView);
-            locationText.setText(place.getLocation());
+                // Verileri kullan (örneğin, başlık ve puanı göstermek)
+                TextView headTitleTextView = view.findViewById(R.id.headTextView);
+                headTitleTextView.setText(place.getTitle());
 
+                RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+                ratingBar.setRating((float) place.getRating());
+
+                TextView ratingText = view.findViewById(R.id.ratingTextView);
+                ratingText.setText(String.valueOf(place.getRating()));
+
+                ImageView imageView = view.findViewById(R.id.imageView);
+                if (place.getImagePath() != null) {
+                    try {
+                        // assets/image/ dosyasındaki resim dosyasını yükle
+                        InputStream inputStream = requireContext().getAssets().open(place.getImagePath());
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        imageView.setImageBitmap(bitmap);
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        imageView.setImageResource(R.drawable.place_holder_image);
+                    }
+                }
+
+                TextView locationText = view.findViewById(R.id.locationTextView);
+                locationText.setText(place.getLocation());
+            }
         }
 
         // ImageView'a tıklama dinleyici ekle

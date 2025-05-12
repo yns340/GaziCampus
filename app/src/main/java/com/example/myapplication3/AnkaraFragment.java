@@ -1,20 +1,25 @@
 package com.example.myapplication3;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class AnkaraFragment extends Fragment {
+    private static final String TAG = "AnkaraFragment";
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -73,12 +78,7 @@ public class AnkaraFragment extends Fragment {
         });
 
         buttonEntertainment.setOnClickListener(v -> {
-            Fragment newFragment = new AnkaraScrollFragment(); // scroll sayfanın fragmentı
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, newFragment) // fragmentContainer senin ana sayfandaki FrameLayout veya benzeri bir ID
-                    .addToBackStack(null) // geri tuşuna basınca geri gelmek istersen
-                    .commit();
+            fetchEventsAndNavigate();
         });
 
         buttonFood.setOnClickListener(v -> {
@@ -114,6 +114,45 @@ public class AnkaraFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void fetchEventsAndNavigate() {
+        Log.d(TAG, "fetchEventsAndNavigate: Butona basıldı!");
+
+        Retrofit retrofit = ApiClient.getRetrofitInstance();
+        AnkaraEtkinlikApiService apiService = retrofit.create(AnkaraEtkinlikApiService.class);
+
+        Call<AnkaraEventResponse> call = apiService.getEtkinlikler(7, 5); //Ankara (Örnek ID)
+        call.enqueue(new Callback<AnkaraEventResponse>() {
+            @Override
+            public void onResponse(Call<AnkaraEventResponse> call, Response<AnkaraEventResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<AnkaraEvent> events = response.body().getItems();
+
+                    if (events != null && !events.isEmpty()) {
+                        ArrayList<AnkaraEvent> eventArrayList = new ArrayList<>(events);
+
+                        // Yeni fragmente veri gönder
+                        AnkaraScrollFragment newFragment = AnkaraScrollFragment.newInstance(eventArrayList);
+
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragmentContainer, newFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        Log.e(TAG, "Etkinlik listesi boş veya null.");
+                    }
+                } else {
+                    Log.e(TAG, "API Hatası: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnkaraEventResponse> call, Throwable t) {
+                Log.e(TAG, "API Çağrısı Başarısız: " + t.getMessage());
+            }
+        });
     }
 
 }
