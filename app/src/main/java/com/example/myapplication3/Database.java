@@ -2,12 +2,14 @@ package com.example.myapplication3;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -215,33 +217,12 @@ public class Database extends SQLiteOpenHelper {
     }
 
     private Bitmap yukleBitmap(String assetYolu) {
-        try {
-            InputStream is = dbContext.getAssets().open(assetYolu);
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-            return bitmap;
-        } catch (Exception e) {
+        AssetManager assetManager = dbContext.getAssets();
+        try (InputStream is = assetManager.open(assetYolu)) {
+            return BitmapFactory.decodeStream(is);
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public void ornekVeriEkle() {
-        if (tumKulupleriGetir().isEmpty()) {
-            kulupEkle("Yazılım Kulübü", "logo_yazilim", "Yazılım ve teknoloji odaklı etkinlikler.");
-            kulupEkle("Müzik Kulübü", "logo_muzik", "Konserler, jam session'lar ve daha fazlası.");
-
-            List<GenericKulup> kulupler = tumKulupleriGetir();
-
-            for (Kulup kulup : kulupler) {
-                if (kulup.getAd().equals("Yazılım Kulübü")) {
-                    etkinlikEkle("Hackathon 2025", "afis_hackathon", kulup.getId());
-                    etkinlikEkle("Mobil Uygulama Geliştirme", "afis_mobil", kulup.getId());
-                } else if (kulup.getAd().equals("Müzik Kulübü")) {
-                    etkinlikEkle("Akustik Konser", "afis_akustik", kulup.getId());
-                    etkinlikEkle("Rock Gecesi", "afis_rock", kulup.getId());
-                }
-            }
         }
     }
 }
