@@ -11,11 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ImageButton;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -114,8 +115,25 @@ public class AnkaraScrollFragment extends Fragment {
                 RatingBar ratingBar = tabView.findViewById(R.id.ratingBar);
 
                 // API'den geldiği için rating yerine contentTextView'i göster
-                if (event != null)
-                    ratingBar.setVisibility(View.GONE);  // RatingBar'ı gizle
+                if (event != null) {
+                    ratingBar.setVisibility(View.GONE);
+                    TextView date = tabView.findViewById(R.id.dateTextView);
+                    String originalDate = event.getStart();
+
+                    try {
+                        Date dateObj = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault()).parse(originalDate);
+                        String formattedDate = new SimpleDateFormat("dd/MM/yyyy\nHH:mm", Locale.getDefault()).format(dateObj);
+                        date.setText(formattedDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    date.setVisibility(View.VISIBLE);
+                }
+
+                ImageView poster = tabView.findViewById(R.id.imageView);
+                String posterUrl = event.getPosterUrl();
+                Picasso.get().load(posterUrl).into(poster);
 
                 tabView.setOnClickListener(v -> {
                     // Yeni bir fragment açarak detayları göster

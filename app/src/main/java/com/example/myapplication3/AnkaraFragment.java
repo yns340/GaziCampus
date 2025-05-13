@@ -122,7 +122,7 @@ public class AnkaraFragment extends Fragment {
         Retrofit retrofit = ApiClient.getRetrofitInstance();
         AnkaraEtkinlikApiService apiService = retrofit.create(AnkaraEtkinlikApiService.class);
 
-        Call<AnkaraEventResponse> call = apiService.getEtkinlikler(7, 5); //Ankara (Örnek ID)
+        Call<AnkaraEventResponse> call = apiService.getEtkinlikler(7, 50); //Ankara (Örnek ID)
         call.enqueue(new Callback<AnkaraEventResponse>() {
             @Override
             public void onResponse(Call<AnkaraEventResponse> call, Response<AnkaraEventResponse> response) {

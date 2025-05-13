@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AnkaraItemPageFragment extends Fragment {
 
@@ -35,6 +39,37 @@ public class AnkaraItemPageFragment extends Fragment {
                 if (event != null) {
                     TextView headTitleTextView = view.findViewById(R.id.headTextView);
                     headTitleTextView.setText(event.getName());
+
+                    TextView adres = view.findViewById(R.id.locationTextView);
+                    adres.setText(event.getVenue().getAddress());
+
+                    ImageView poster = view.findViewById(R.id.imageView);
+                    String posterUrl = event.getPosterUrl();
+                    Picasso.get().load(posterUrl).into(poster);
+
+                    RatingBar rating = view.findViewById(R.id.ratingBar);
+                    rating.setVisibility(View.GONE);
+
+                    TextView ratingText = view.findViewById(R.id.ratingTextView);
+                    ratingText.setVisibility(View.GONE);
+
+                    TextView date = view.findViewById(R.id.dateTextView);
+
+                    String originalDate = event.getStart();
+
+                    try {
+                        Date dateObj = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault()).parse(originalDate);
+                        String formattedDate = new SimpleDateFormat("dd/MM/yyyy\nHH:mm", Locale.getDefault()).format(dateObj);
+                        date.setText(formattedDate);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    date.setVisibility(View.VISIBLE);
+
+                    Button button = view.findViewById(R.id.buttonRating);
+                    button.setText("BİLET ARAŞTIR");
+
                 }
             }
             else if (getArguments().containsKey("place")) {
@@ -74,8 +109,16 @@ public class AnkaraItemPageFragment extends Fragment {
 
         konumImageView.setOnClickListener(v -> {
             if (getArguments() != null) {
-                Place place = (Place) getArguments().getSerializable("place");
-                openLocationInMaps(place.getLocation());
+                if (getArguments().containsKey("event")) {
+                    AnkaraEvent event = (AnkaraEvent) getArguments().getSerializable("event");
+                    if (event != null) {
+                        openLocationInMaps(event.getVenue().getAddress());
+                    }
+                }
+                else if(getArguments().containsKey("place")){
+                    Place place = (Place) getArguments().getSerializable("place");
+                    openLocationInMaps(place.getLocation());
+                }
             }
             else
                 Toast.makeText(requireContext(), "Konum yok", Toast.LENGTH_SHORT).show();

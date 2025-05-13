@@ -11,6 +11,6 @@ public interface AnkaraEtkinlikApiService {
     @GET("api/v2/events")
     Call<AnkaraEventResponse> getEtkinlikler(
             @Query("city_ids") int cityId,
-            @Query("limit") int limit
+            @Query("take") int take
     );
 }
