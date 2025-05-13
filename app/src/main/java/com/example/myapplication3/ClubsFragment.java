@@ -1,64 +1,94 @@
 package com.example.myapplication3;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClubsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ClubsFragment extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ClubsFragment extends Fragment implements ClubAdapter.OnKulupClickListener {
 
-    public ClubsFragment() {
-        // Required empty public constructor
-    }
+    private RecyclerView recyclerView;
+    private EditText searchEditText;
+    private ClubAdapter adapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClubsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ClubsFragment newInstance(String param1, String param2) {
-        ClubsFragment fragment = new ClubsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private List<GenericKulup> tumKulupler;
+    private List<GenericKulup> filtrelenmisKulupler;
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_clubs, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.kuluplerRecyclerView);
+        searchEditText = view.findViewById(R.id.searchEditText);
+
+        Database db = new Database(requireContext());
+        tumKulupler = new ArrayList<>();
+
+        // tüm kulüpler getiriliyor
+        for (Kulup k : db.tumKulupleriGetir()) {
+            if (k instanceof GenericKulup) {
+                tumKulupler.add((GenericKulup) k);
+            }
+        }
+
+        filtrelenmisKulupler = new ArrayList<>(tumKulupler);
+        adapter = new ClubAdapter(filtrelenmisKulupler, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(adapter);
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filtreleKulupListesi(s.toString());
+            }
+        });
+    }
+
+    private void filtreleKulupListesi(String query) {
+        filtrelenmisKulupler.clear();
+        for (GenericKulup kulup : tumKulupler) {
+            if (kulup.getAd().toLowerCase().contains(query.toLowerCase())) {
+                filtrelenmisKulupler.add(kulup);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onKulupClick(GenericKulup kulup) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("kulup_id", kulup.getId()); // ✅ bu satır çalışmalı!
+
+        KulupSayfasiFragment fragment = new KulupSayfasiFragment();
+        fragment.setArguments(bundle);
+
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }

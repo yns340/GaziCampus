@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/TumKuluplerPage"
+    android:id="@+id/KulupDetayPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".ClubsFragment">
+    android:background="#FFF"
+    tools:context=".KulupSayfasiFragment">
 
     <!-- ÜST PANEL -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,51 +28,77 @@
             android:src="@drawable/home"
             android:padding="15dp"
             android:scaleType="centerInside"
-            android:layout_marginStart="50dp"
-            android:importantForAccessibility="no"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Geri dön"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/headTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@android:color/white"
             android:gravity="center"
-            android:text="KULÜPLER"
-            android:textColor="@color/black"
+            android:text="Kulüp Adı"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintStart_toEndOf="@id/HomeButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- ARAMA ÇUBUĞU -->
-    <EditText
-        android:id="@+id/searchEditText"
+    <!-- KULÜP LOGO -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/kulupLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:src="@drawable/profile"
+        android:background="@drawable/bg_home"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        app:layout_constraintTop_toBottomOf="@id/topPanel"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- KULÜP ADI -->
+    <TextView
+        android:id="@+id/kulupId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Kulüp ara..."
-        android:inputType="text"
-        android:padding="12dp"
-        app:layout_constraintTop_toBottomOf="@id/topPanel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="12dp"/>
+        android:text="ACM GAZİ"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@id/kulupLogo"
+        app:layout_constraintBottom_toBottomOf="@id/kulupLogo"
+        app:layout_constraintStart_toEndOf="@id/kulupLogo"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- KULÜP LİSTESİ -->
+    <!-- AÇIKLAMA -->
+    <TextView
+        android:id="@+id/kulupAciklama"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Kulüp hakkında açıklama burada yer alır."
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/kulupLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- RECYCLER VIEW -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/kuluplerRecyclerView"
-        android:importantForAccessibility="no"
+        android:id="@+id/etkinlikRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/searchEditText"
+        android:clipToPadding="false"
+        android:contentDescription="Etkinliklerin listelendiği alan"
+        app:layout_constraintTop_toBottomOf="@id/kulupAciklama"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
