@@ -216,7 +216,7 @@ public class Database extends SQLiteOpenHelper {
         return kulup;
     }
 
-    private Bitmap yukleBitmap(String assetYolu) {
+    public Bitmap yukleBitmap(String assetYolu) {
         AssetManager assetManager = dbContext.getAssets();
         try (InputStream is = assetManager.open(assetYolu)) {
             return BitmapFactory.decodeStream(is);

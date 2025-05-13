@@ -54,7 +54,6 @@ public class KulupSayfasiFragment extends Fragment implements EtkinlikClickListe
             kulupAdiTextView.setText(kulup.getAd());
             kulupAciklamaTextView.setText(kulup.getAciklama());
 
-            // ❗ Değiştirilen satır
             if (kulup.getLogo() != null) {
                 kulupLogo.setImageBitmap(kulup.getLogo());
             } else {
@@ -86,11 +85,11 @@ public class KulupSayfasiFragment extends Fragment implements EtkinlikClickListe
         GenericEtkinlik etkinlik = dbHelper.getEtkinlikler(etkinlikId);
 
         if (etkinlik != null) {
-            etkinlik.yukleAfisBitmap(getContext()); // zaten bitmap yüklüyor
+            etkinlik.yukleAfisBitmap(getContext());
 
             Bundle args = new Bundle();
             args.putString("etkinlikAdi", etkinlik.getAd());
-            args.putParcelable("etkinlikAfisBitmap", etkinlik.getAfisBitmap()); // değiştirildi
+            args.putParcelable("etkinlikAfisBitmap", etkinlik.getAfisBitmap());
 
             EtkinlikDetayFragment detayFragment = new EtkinlikDetayFragment();
             detayFragment.setArguments(args);
