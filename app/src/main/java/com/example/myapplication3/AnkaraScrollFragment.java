@@ -92,6 +92,23 @@ public class AnkaraScrollFragment extends Fragment {
         super.onResume();
         tabContainer.removeAllViews();
         createTabs(LayoutInflater.from(requireContext()));
+
+        Database db = new Database(requireContext());
+
+        if (placeList != null && !placeList.isEmpty()) {
+            for (int i = 0; i < tabContainer.getChildCount(); i++) {
+                View tabView = tabContainer.getChildAt(i);
+
+                if (tabView != null && i < placeList.size()) {
+                    Place place = placeList.get(i);
+
+                    RatingBar ratingBar = tabView.findViewById(R.id.ratingBar);
+
+                    double updatedRating = db.getRating(place.getTitle(), place.getTableName());
+                    ratingBar.setRating((float) updatedRating);
+                }
+            }
+        }
     }
 
 

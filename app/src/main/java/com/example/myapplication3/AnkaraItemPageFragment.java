@@ -70,6 +70,16 @@ public class AnkaraItemPageFragment extends Fragment {
                     Button button = view.findViewById(R.id.buttonRating);
                     button.setText("BİLET ARAŞTIR");
 
+                    button.setOnClickListener(v -> {
+                        if (event != null) {
+                            String query = event.getName() + " Ankara";
+                            String url = "https://www.google.com/search?q=" + query;
+
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(url));
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
             else if (getArguments().containsKey("place")) {
@@ -83,7 +93,7 @@ public class AnkaraItemPageFragment extends Fragment {
                 ratingBar.setRating((float) place.getRating());
 
                 TextView ratingText = view.findViewById(R.id.ratingTextView);
-                ratingText.setText(String.valueOf(place.getRating()));
+                ratingText.setText(String.format(Locale.US, "%.1f", place.getRating()));
 
                 ImageView imageView = view.findViewById(R.id.imageView);
                 if (place.getImagePath() != null) {
@@ -101,6 +111,22 @@ public class AnkaraItemPageFragment extends Fragment {
 
                 TextView locationText = view.findViewById(R.id.locationTextView);
                 locationText.setText(place.getLocation());
+
+                Button buttonRating = view.findViewById(R.id.buttonRating);
+
+                buttonRating.setOnClickListener(v -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("place", place);
+
+                    Fragment newFragment = new AnkaraRatingFragment();
+                    newFragment.setArguments(bundle);
+
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.fragmentContainer, newFragment) // add kullanarak üzerine ekleme
+                            .addToBackStack(null)
+                            .commit();
+                });
             }
         }
 
@@ -139,18 +165,6 @@ public class AnkaraItemPageFragment extends Fragment {
             bottomNavigationView.setSelectedItemId(R.id.nav_anasayfa);
         });
 
-        Button buttonRating = view.findViewById(R.id.buttonRating);
-
-        buttonRating.setOnClickListener(v -> {
-            Fragment newFragment = new AnkaraRatingFragment();
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragmentContainer, newFragment) // add kullanarak üzerine ekleme
-                    .addToBackStack(null)
-                    .commit();
-        });
-
-
         return view;
     }
 
@@ -167,4 +181,26 @@ public class AnkaraItemPageFragment extends Fragment {
             Toast.makeText(requireContext(), "Google Maps uygulaması yüklü değil", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getArguments() != null && getArguments().containsKey("place")) {
+            Place place = (Place) getArguments().getSerializable("place");
+
+            if (place != null) {
+                // Veritabanından güncel veriyi çek
+                Database db = new Database(requireContext());
+                double updatedRating = db.getRating(place.getTitle(), place.getTableName());  // getRating metodunu ekle
+
+                RatingBar ratingBar = getView().findViewById(R.id.ratingBar);
+                TextView ratingTextView = getView().findViewById(R.id.ratingTextView);
+
+                ratingBar.setRating((float) updatedRating);
+                ratingTextView.setText(String.format(Locale.US, "%.1f", updatedRating));
+            }
+        }
+    }
+
 }

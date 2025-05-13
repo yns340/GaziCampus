@@ -1,5 +1,6 @@
 package com.example.myapplication3;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -96,22 +97,22 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO places (title, rating, imagePath, location) VALUES ('Gazi Merkez Kampüs', 5.0, 'images/gazimerkez.jpeg', 'Emniyet, Gazi Ünv., 06560 Yenimahalle/Ankara')");
 
         db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Penguen Kitap/Kafe', 5.0, 'images/penguen.jpeg', 'Gaziosmanpaşa, Arjantin Cd. No: 2, 06680 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Caribou Kafe Gar', 2.5, 'images/caribou.jpeg', 'Ankara Tren Gari, Eti, Celal Bayar Blv., 06930 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Meşhur Gülçimen Aspava', 5.0, 'images/gulcimen.jpeg', 'Mustafa Kemal, Şehit Aybüke Yalçın Caddesi No:23, 06510 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('100 Burger', 5.0, 'images/100burger.jpeg', 'Emek, Veli Necdet Arığ Cd No:36A, 06490 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Colambia Gölbaşı', 5.0, 'images/colambia.jpeg', 'Gaziosmanpaşa, Sahil Cd. No:22, 06830 Gölbaşı/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('ODTÜ Vişnelik', 5.0, 'images/odtu.jpeg', 'İşçi Blokları, 1538. Cd. No:58, 06530 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Hacettepe Yeşil Vadi', 5.0, 'images/hacettepe.jpeg', 'Gaziosmanpaşa, Kırlangıç Sk. No:7, 06700 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Peçenek Döner', 5.0, 'images/peçenek.jpeg', 'Mustafa Kemal Mh. VIA GREEN İş Merkezi, 2079. Sk. 2C/8, 06530 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('HMBRGR Tunalı', 5.0, 'images/hmbrgr.jpeg', 'Çankaya Barbaros İran Caddesi No:6 D:No:8A, 06700 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Timboo Cafe Atakule', 5.0, 'images/timboo.jpeg', 'Çankaya Mahallesi, Çankaya Caddesi, No: 1B/29, Atakule, 06690 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Taş Bebek Kafe', 5.0, 'images/tasbebek.jpeg', 'Kale, Doyuran Sk. No:3, 06250 Kale/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Kahve Bahane Hamamönü', 5.0, 'images/hamamonu.jpeg', 'C, Hacettepe, Hamamönü Sk. No:106, 06230 Altındağ/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Kırk Fırın Kaşmir Center', 5.0, 'images/kasmir.jpeg', 'Göksu, 1. TBMM Cd. No:9, 06820 Etimesgut/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('AOÇ Park Center', 5.0, 'images/aoc.jpeg', 'Bahçekapı, 06797 Etimesgut/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('IF Sokak Söğütözü', 5.0, 'images/if.jpeg', 'Beştepe, Nergiz Sk. Via Tower İş Merkezi No:7/A Kat:21 D:50, 06560 Yenimahalle/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Caffe Di Toee Söğütözü', 5.0, 'images/toee.jpeg', 'Çukurambar, 1480. Sk. 2B Blok No: 12, 06510 Çankaya/Ankara')");
-        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Unique Burgers', 5.0, 'images/unique.jpeg', 'Bahçelievler, Prof. Muammer Aksoy Cd 7-A, 06450 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Caribou Kafe Gar', 2.5, 'images/kafe.jpg', 'Ankara Tren Gari, Eti, Celal Bayar Blv., 06930 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Meşhur Gülçimen Aspava', 5.0, 'images/restaurant.jpg', 'Mustafa Kemal, Şehit Aybüke Yalçın Caddesi No:23, 06510 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('100 Burger', 5.0, 'images/restaurant.jpg', 'Emek, Veli Necdet Arığ Cd No:36A, 06490 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Colambia Gölbaşı', 5.0, 'images/kafe.jpg', 'Gaziosmanpaşa, Sahil Cd. No:22, 06830 Gölbaşı/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('ODTÜ Vişnelik', 5.0, 'images/restaurant.jpg', 'İşçi Blokları, 1538. Cd. No:58, 06530 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Hacettepe Yeşil Vadi', 5.0, 'images/restaurant.jpg', 'Gaziosmanpaşa, Kırlangıç Sk. No:7, 06700 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Peçenek Döner', 5.0, 'images/restaurant.jpg', 'Mustafa Kemal Mh. VIA GREEN İş Merkezi, 2079. Sk. 2C/8, 06530 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('HMBRGR Tunalı', 5.0, 'images/restaurant.jpg', 'Çankaya Barbaros İran Caddesi No:6 D:No:8A, 06700 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Timboo Cafe Atakule', 5.0, 'images/kafe.jpg', 'Çankaya Mahallesi, Çankaya Caddesi, No: 1B/29, Atakule, 06690 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Taş Bebek Kafe', 5.0, 'images/kafe.jpg', 'Kale, Doyuran Sk. No:3, 06250 Kale/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Kahve Bahane Hamamönü', 5.0, 'images/kafe.jpg', 'C, Hacettepe, Hamamönü Sk. No:106, 06230 Altındağ/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Kırk Fırın Kaşmir Center', 5.0, 'images/kafe.jpg', 'Göksu, 1. TBMM Cd. No:9, 06820 Etimesgut/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('AOÇ Park Center', 5.0, 'images/restaurant.jpg', 'Bahçekapı, 06797 Etimesgut/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('IF Sokak Söğütözü', 5.0, 'images/restaurant.jpg', 'Beştepe, Nergiz Sk. Via Tower İş Merkezi No:7/A Kat:21 D:50, 06560 Yenimahalle/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Caffe Di Toee Söğütözü', 5.0, 'images/kafe.jpg', 'Çukurambar, 1480. Sk. 2B Blok No: 12, 06510 Çankaya/Ankara')");
+        db.execSQL("INSERT INTO foods (title, rating, imagePath, location) VALUES ('Unique Burgers', 5.0, 'images/restaurant.jpg', 'Bahçelievler, Prof. Muammer Aksoy Cd 7-A, 06450 Çankaya/Ankara')");
 
     }
 
@@ -130,8 +131,9 @@ public class Database extends SQLiteOpenHelper {
                 double rating = cursor.getDouble(cursor.getColumnIndexOrThrow("rating"));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow("imagePath"));
                 String location = cursor.getString(cursor.getColumnIndexOrThrow("location"));
+                String tableName = "places";
 
-                Place place = new Place(id, title, rating, imagePath, location);
+                Place place = new Place(id, title, rating, imagePath, location, tableName);
                 placesList.add(place);
             } while (cursor.moveToNext());
         }
@@ -155,8 +157,9 @@ public class Database extends SQLiteOpenHelper {
                 double rating = cursor.getDouble(cursor.getColumnIndexOrThrow("rating"));
                 String imagePath = cursor.getString(cursor.getColumnIndexOrThrow("imagePath"));
                 String location = cursor.getString(cursor.getColumnIndexOrThrow("location"));
+                String tableName = "foods";
 
-                Place place = new Place(id, title, rating, imagePath, location);
+                Place place = new Place(id, title, rating, imagePath, location, tableName);
                 foodsList.add(place);
             } while (cursor.moveToNext());
         }
@@ -165,4 +168,33 @@ public class Database extends SQLiteOpenHelper {
 
         return foodsList;
     }
+
+    public void UpdateRating(String title, double rating, String tableName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("rating", rating);
+
+        if(tableName.equals("places")) {
+            db.update(TABLE_PLACES, values, "title = ?", new String[]{title});
+        }
+        else if(tableName.equals("foods")) {
+            db.update(TABLE_FOODS, values, "title = ?", new String[]{title});
+        }
+    }
+
+    public double getRating(String title, String tableName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT rating FROM " + tableName + " WHERE title = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{title});
+        double rating = -1;
+
+        if(cursor.moveToFirst()){
+            rating = cursor.getDouble(cursor.getColumnIndexOrThrow("rating"));
+        }
+        cursor.close();
+        db.close();
+
+        return rating;
+    }
+
 }

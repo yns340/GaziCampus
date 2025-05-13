@@ -9,12 +9,15 @@ public class Place implements Serializable{
 
     private String location;
 
-    public Place (int id, String title, double rating, String imagePath, String location) {
+    private String tableName;
+
+    public Place (int id, String title, double rating, String imagePath, String location, String tableName) {
         this.id = id;
         this.title = title;
         this.rating = rating;
         this.imagePath = imagePath;
         this.location = location;
+        this.tableName = tableName;
     }
 
     public int getId() {
@@ -35,5 +38,9 @@ public class Place implements Serializable{
 
     public String getLocation() {
         return location;
+    }
+
+    public String getTableName(){
+        return tableName;
     }
 }

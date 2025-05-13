@@ -41,8 +41,18 @@ public class AnkaraRatingFragment extends Fragment {
 
         tamamlandiButton.setOnClickListener(v -> {
             float ratingValue = ratingBar.getRating();
-            Toast.makeText(requireContext(), "Puanınız: " + ratingValue, Toast.LENGTH_SHORT).show();
+            Database db = new Database(requireContext());
+            Place place = (Place) getArguments().getSerializable("place");
 
+            if(place.getTableName() == "places"){
+                db.UpdateRating(place.getTitle(), ratingValue, "places");
+            }
+
+            else if(place.getTableName() == "foods"){
+                db.UpdateRating(place.getTitle(), ratingValue, "foods");
+            }
+
+            Toast.makeText(requireContext(), "Puanınız: " + ratingValue, Toast.LENGTH_SHORT).show();
             requireActivity().getSupportFragmentManager().popBackStack();
         });
 
