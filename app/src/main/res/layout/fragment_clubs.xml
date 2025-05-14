@@ -29,30 +29,27 @@
             android:padding="15dp"
             android:scaleType="centerInside"
             android:layout_marginStart="50dp"
-            android:contentDescription="Geri dön"
+            android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/headTextView"
             android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="50dp"
-            android:fontFamily="sans-serif-medium"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_home"
             android:gravity="center"
-            android:text="Kulüp Adı"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:text="KULÜPLER"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textAllCaps="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintStart_toEndOf="@id/HomeButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- ARAMA ÇUBUĞU -->
@@ -61,7 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Kulüp ara..."
-        android:background="#C3E2F8"
+        android:background="@drawable/bg_text"
         android:inputType="text"
         android:padding="12dp"
         app:layout_constraintTop_toBottomOf="@id/topPanel"

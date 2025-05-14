@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         // Sadece ilk açılışta yönlendir
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_view, new HomeRouterFragment())
+                    .replace(R.id.fragmentContainer, new HomeRouterFragment())
                     .commit();
         }
     }

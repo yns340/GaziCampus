@@ -52,7 +52,7 @@ public class HomeRouterFragment extends Fragment {
 
         // Ana Fragment'e yönlendir (örneğin ClubsFragment)
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container_view, new ClubsFragment())
+                .replace(R.id.fragmentContainer, new ClubsFragment())
                 .commit();
 
         return view;

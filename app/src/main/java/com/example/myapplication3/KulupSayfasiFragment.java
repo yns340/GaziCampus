@@ -96,7 +96,7 @@ public class KulupSayfasiFragment extends Fragment implements EtkinlikClickListe
 
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container_view, detayFragment)
+                    .replace(R.id.fragmentContainer, detayFragment)
                     .addToBackStack(null)
                     .commit();
         } else {

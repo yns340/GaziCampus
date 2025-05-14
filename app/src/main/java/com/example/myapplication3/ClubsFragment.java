@@ -86,7 +86,7 @@ public class ClubsFragment extends Fragment implements ClubAdapter.OnKulupClickL
         fragment.setArguments(bundle);
 
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container_view, fragment)
+                .replace(R.id.fragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit();
     }
