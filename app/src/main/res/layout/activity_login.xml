@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C3E5F6"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+
+    <ImageView
+        android:id="@+id/profileIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Profil Simgesi"
+        android:scaleType="centerInside"
+        android:src="@drawable/profile" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded"
+        android:hint="Kullanıcı adı"
+        android:padding="16dp" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded"
+        android:hint="Şifre"
+        android:inputType="textPassword"
+        android:padding="16dp" />
+
+    <!-- Giriş Yap Butonu -->
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="#4461A9"
+        android:text="Giriş Yap"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="#4461A9"
+        android:text="Kayıt Ol"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

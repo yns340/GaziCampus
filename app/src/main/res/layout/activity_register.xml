@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C3E5F6"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/editTextNewUsername"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded"
+        android:hint="Yeni kullanıcı adı"
+        android:padding="16dp" />
+
+    <EditText
+        android:id="@+id/editTextNewPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded"
+        android:hint="Yeni şifre"
+        android:inputType="textPassword"
+        android:padding="16dp" />
+
+    <Button
+        android:id="@+id/createAccount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="#4461A9"
+        android:text="Hesap Oluştur"
+        android:textColor="#FFFFFF" />
+</LinearLayout>
