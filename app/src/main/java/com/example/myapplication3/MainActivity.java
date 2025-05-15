@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_anasayfa) {
                 fragment = new DuyuruFragment();
             } else if (itemId == R.id.nav_yemek) {
-                fragment = new FoodsFragment();
+                fragment = new YemeklerFragment();
             } else if (itemId == R.id.nav_ankara) {
                 fragment = new AnkaraFragment();
             }
