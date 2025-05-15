@@ -34,11 +34,7 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_kulupler) {
-                if (savedInstanceState == null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentContainer, new HomeRouterFragment())
-                            .commit();
-                }
+                fragment = new HomeRouterFragment();
             } else if (itemId == R.id.nav_ders) {
                 fragment = new LessonsFragment();
             } else if (itemId == R.id.nav_anasayfa) {

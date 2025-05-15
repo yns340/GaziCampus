@@ -6,6 +6,8 @@
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/colorOnPrimary</item>
         <item name="colorOnBackground">@color/colorOnPrimary</item>
+        <item name="colorControlActivated">@android:color/transparent</item>
+
     </style>
 
     <style name="Theme.MyApplication3" parent="Base.Theme.MyApplication3" />

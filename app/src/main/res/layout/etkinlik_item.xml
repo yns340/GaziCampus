@@ -37,7 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_gravity="center_horizontal"
-            android:text="Detaylı Bilgi" />
+            android:backgroundTint="@color/white"
+            android:text="Detaylı Bilgi"
+            android:textColor = "@color/black"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -21,8 +21,8 @@ public class EtkinlikDetayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_etkinlik_detay, container, false);
 
-        TextView etkinlikAdi = view.findViewById(R.id.detayEtkinlikAdi);
-        ImageView etkinlikAfis = view.findViewById(R.id.detayEtkinlikImage);
+        TextView etkinlikAdi = view.findViewById(R.id.detayTitle);
+        ImageView etkinlikAfis = view.findViewById(R.id.detayImage);
 
         Bundle args = getArguments();
         if (args != null) {

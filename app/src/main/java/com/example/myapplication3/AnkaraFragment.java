@@ -98,21 +98,6 @@ public class AnkaraFragment extends Fragment {
                     .commit();
         });
 
-        ImageButton homeButton = view.findViewById(R.id.HomeButton); // HomeButton
-
-        homeButton.setOnClickListener(v -> {
-            Fragment newFragment = new DuyuruFragment(); // DuyuruFragment'ını yükle
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, newFragment) // fragmentContainer ID'si
-                    .addToBackStack(null) // Geri gelmek için stack'e ekle
-                    .commit();
-
-            BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation);
-            bottomNavigationView.setSelectedItemId(R.id.nav_anasayfa);
-        });
-
-
         return view;
     }
 

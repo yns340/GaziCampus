@@ -17,24 +17,11 @@
         app:layout_constraintHeight_percent="0.1">
 
 
-        <ImageButton
-            android:id="@+id/HomeButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="50dp"
-            android:background="@drawable/bg_home_design"
-            android:scaleType="centerInside"
-            android:padding="15dp"
-            android:src="@drawable/bg_home_design"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/headTextView"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/bg_home_design"
             android:fontFamily="sans-serif-medium"
@@ -43,7 +30,7 @@
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="25sp"
-            app:layout_constraintStart_toEndOf="@id/HomeButton"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
