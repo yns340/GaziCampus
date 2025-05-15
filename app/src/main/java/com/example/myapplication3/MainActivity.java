@@ -1,30 +1,34 @@
 package com.example.myapplication3;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import androidx.fragment.app.Fragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.content.res.ColorStateList;
+import android.widget.ImageButton;
 
-import com.example.myapplication3.ui.yemek.YemeklerActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button yemeklerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // MainActivity'nin layout dosyasını ayarlayın
+        setContentView(R.layout.activity_main);
 
-        yemeklerButton = findViewById(R.id.yemeklerButton); // Butonun ID'sini bulun
-        yemeklerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // YemeklerActivity'i başlatmak için Intent oluşturun
-                Intent intent = new Intent(MainActivity.this, YemeklerActivity.class);
-                startActivity(intent); // YemeklerActivity'i başlatın
-            }
-        });
+        // İlk fragment'ı yükleyelim
+        loadFragment(new YemeklerFragment());
+
+    }
+
+    // Fragment yükleme fonksiyonu
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }

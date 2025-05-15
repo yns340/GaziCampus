@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_kulupler"
+
+        android:title="Kulüpler" />
+
+    <item
+        android:id="@+id/nav_ders"
+
+        android:title="Dersler" />
+
+    <item
+        android:id="@+id/nav_anasayfa"
+
+        android:title="Ana Sayfa" />
+
+    <item
+        android:id="@+id/nav_yemek"
+        android:title="Yemek" />
+
+    <item
+        android:id="@+id/nav_ankara"
+        android:title="Ankara" />
+
+</menu>

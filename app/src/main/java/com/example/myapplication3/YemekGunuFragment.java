@@ -1,4 +1,4 @@
-package com.example.myapplication3.ui.yemek;
+package com.example.myapplication3;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.example.myapplication3.R;
-import com.example.myapplication3.model.Yemek;
 
 public class YemekGunuFragment extends Fragment {
 

@@ -22,9 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.yemek.YemeklerActivity"
-            android:exported="false" />
+
     </application>
 
 </manifest>

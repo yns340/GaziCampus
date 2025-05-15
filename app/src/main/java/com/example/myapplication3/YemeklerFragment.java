@@ -1,16 +1,11 @@
-package com.example.myapplication3.ui.yemek;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+package com.example.myapplication3;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,9 +13,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication3.R;
-import com.example.myapplication3.adapter.YemekPagerAdapter;
-import com.example.myapplication3.model.Yemek;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,18 +29,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-public class YemeklerActivity extends AppCompatActivity {
+public class YemeklerFragment extends Fragment {
 
-    private static final String TAG = "YemeklerActivity";
+    private static final String TAG = "YemeklerFragment";
     private static final String PREFS_NAME = "MyPrefs";
     private static final String ANONIM_USER_ID_KEY = "anonimUserId";
 
@@ -67,22 +66,42 @@ public class YemeklerActivity extends AppCompatActivity {
     private float kullanicPuani = 0f;
     private Map<String, Float> kullaniciPuanlari = new HashMap<>(); // Kullanıcının verdiği puanları saklamak için, yemekTarih'ine göre saklanacak
     private String anonimUserId; // Cihaza özel anonim kullanıcı ID'si
+    private Context context;
+
+    public YemeklerFragment() {
+        // Required empty public constructor
+    }
+
+    public static YemeklerFragment newInstance() {
+        return new YemeklerFragment();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: YemeklerActivity oluşturuldu.");
-        setContentView(R.layout.activity_yemekler);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Fragment layout'unu şişir
+        return inflater.inflate(R.layout.fragment_yemekler, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated: YemeklerFragment oluşturuldu.");
 
         // UI öğelerini başlat
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
-        progressBar = findViewById(R.id.progressBar);
-        ratingBar = findViewById(R.id.ratingBar);
-        averageRatingTextView = findViewById(R.id.averageRatingTextView);
-        yorumEditText = findViewById(R.id.commentEditText);
-        yorumGonderButton = findViewById(R.id.addCommentButton);
-        yorumlarRecyclerView = findViewById(R.id.commentsRecyclerView);
+        viewPager = view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        progressBar = view.findViewById(R.id.progressBar);
+        ratingBar = view.findViewById(R.id.ratingBar);
+        averageRatingTextView = view.findViewById(R.id.averageRatingTextView);
+        yorumEditText = view.findViewById(R.id.commentEditText);
+        yorumGonderButton = view.findViewById(R.id.addCommentButton);
+        yorumlarRecyclerView = view.findViewById(R.id.commentsRecyclerView);
 
         // Firebase veritabanını başlat
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -121,15 +140,15 @@ public class YemeklerActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         // Yorumlar RecyclerView'ini ayarla
-        yorumlarRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        yorumlarAdapter = new YorumlarAdapter(this, new ArrayList<>());
+        yorumlarRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        yorumlarAdapter = new YorumlarAdapter(context, new ArrayList<>());
         yorumlarRecyclerView.setAdapter(yorumlarAdapter);
 
         // İlk yüklemede ortalama puanı göster ve yorumları yükle
         yemekTarih = yemekListesi.get(0).getTarih();
         displayAverageRating(yemekTarih);
         loadYorumlar(yemekTarih);
-        //loadKullaniciPuani(yemekTarih); // Kullanıcının puanını yükle  -- taşındı
+        loadKullaniciPuani(yemekTarih); // Kullanıcının puanını yükle
 
         // ViewPager sayfa değiştirme listener'ı
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -163,6 +182,8 @@ public class YemeklerActivity extends AppCompatActivity {
                 if (fromUser) {
                     // Kullanıcı tarafından bir değişiklik yapıldıysa
                     yemekTarih = yemekListesi.get(currentYemekPosition).getTarih();
+                    Log.d(TAG, "onRatingChanged: Kullanıcı puan verdi: " + rating + " yemek tarihi: " + yemekTarih);
+
                     LocalDate yemekTarihi = LocalDate.parse(yemekTarih, DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("tr", "TR")));
                     LocalDate bugun = LocalDate.now();
 
@@ -173,9 +194,10 @@ public class YemeklerActivity extends AppCompatActivity {
                         kullaniciPuanVerdi = true;
                         kullanicPuani = rating; // Kullanıcının verdiği puanı sakla
                         kullaniciPuanlari.put(yemekTarih, rating); // Kullanıcının puanını sakla
+                        Log.d(TAG, "onRatingChanged: Puan kaydedildi: " + rating);
                     } else {
                         // Gelecek bir tarihse hata mesajı
-                        Toast.makeText(YemeklerActivity.this, "Gelecek yemekler için puanlama yapılamaz.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Gelecek yemekler için puanlama yapılamaz.", Toast.LENGTH_SHORT).show();
                         ratingBar.setRating(kullaniciPuanVerdi ? kullanicPuani :  kullaniciPuanlari.getOrDefault(yemekTarih, 0f)); // Önceki puanı koru
                     }
                 }
@@ -189,18 +211,20 @@ public class YemeklerActivity extends AppCompatActivity {
                 String yorum = yorumEditText.getText().toString().trim();
                 if (!yorum.isEmpty()) {
                     yemekTarih = yemekListesi.get(currentYemekPosition).getTarih();
+                    Log.d(TAG, "onClick: Yorum gönderiliyor: '" + yorum + "' yemek tarihi: " + yemekTarih);
                     yorumGonder(yemekTarih, yorum);
                     yorumEditText.getText().clear();
                 } else {
-                    Toast.makeText(YemeklerActivity.this, "Yorumunuzu girin.", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onClick: Boş yorum girilemez");
+                    Toast.makeText(context, "Yorumunuzu girin.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
 
     private void setupViewPager() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        pagerAdapter = new YemekPagerAdapter(fragmentManager, yemekListesi);
+        pagerAdapter = new YemekPagerAdapter(getChildFragmentManager(), yemekListesi);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         Log.d(TAG, "setupViewPager: ViewPager ve TabLayout ayarlandı.");
@@ -209,6 +233,10 @@ public class YemeklerActivity extends AppCompatActivity {
     private void saveRating(String yemekTarih, float rating) {
         puanlarReference = firebaseDatabase.getReference("puanlar");
         String userId = (currentUser != null) ? currentUser.getUid() : anonimUserId; // Anonim kullanıcı ID'sini kullan
+
+        Log.d(TAG, "saveRating: Puan kaydediliyor... Tarih: " + yemekTarih + ", Puan: " + rating + ", Kullanıcı: " + userId);
+        Log.d(TAG, "saveRating: Firebase Referans yolu: " + puanlarReference.child(yemekTarih).child(userId).toString());
+
         puanlarReference.child(yemekTarih).child(userId).setValue(rating);
         Log.d(TAG, "saveRating: Puan kaydedildi. Tarih: " + yemekTarih + ", Puan: " + rating + ", Kullanıcı: " + userId);
     }
@@ -235,7 +263,7 @@ public class YemeklerActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "displayAverageRating: Veritabanı hatası: " + databaseError.getMessage());
-                Toast.makeText(YemeklerActivity.this, "Puanlar alınamadı: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Puanlar alınamadı: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 averageRatingTextView.setText("Ortalama Puan: 0");
             }
         });
@@ -268,7 +296,7 @@ public class YemeklerActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "loadYorumlar: Yorumlar alınamadı: " + databaseError.getMessage());
-                Toast.makeText(YemeklerActivity.this, "Yorumlar alınamadı: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Yorumlar alınamadı: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -293,19 +321,20 @@ public class YemeklerActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "loadKullaniciPuani: Kullanıcı puanı alınamadı: " + databaseError.getMessage());
-                Toast.makeText(YemeklerActivity.this, "Kullanıcı puanı alınamadı: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Kullanıcı puanı alınamadı: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 ratingBar.setRating(0);
             }
         });
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Fragment görünümü yok edildiğinde yapılacak temizlik işlemleri
     }
 
     private String getAnonimUserId() {
-        android.content.SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        android.content.SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String id = prefs.getString(ANONIM_USER_ID_KEY, null);
         if (id == null) {
             id = "anonim_" + generateRandomNumber();
@@ -345,9 +374,9 @@ public class YemeklerActivity extends AppCompatActivity {
     private class YorumlarAdapter extends RecyclerView.Adapter<YorumlarAdapter.YorumViewHolder> {
 
         private List<Yorum> yorumlar;
-        private android.content.Context context;
+        private Context context;
 
-        public YorumlarAdapter(android.content.Context context, List<Yorum> yorumlar) {
+        public YorumlarAdapter(Context context, List<Yorum> yorumlar) {
             this.context = context;
             this.yorumlar = yorumlar;
         }
@@ -358,9 +387,9 @@ public class YemeklerActivity extends AppCompatActivity {
 
         @NonNull
         @Override
-        public YorumViewHolder onCreateViewHolder(@NonNull android.view.ViewGroup parent, int viewType) {
+        public YorumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             // Yorum öğesi için layout'u oluştur
-            View view = android.view.LayoutInflater.from(parent.getContext()).inflate(R.layout.yorum_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.yorum_item, parent, false);
             return new YorumViewHolder(view);
         }
 
@@ -393,4 +422,3 @@ public class YemeklerActivity extends AppCompatActivity {
         }
     }
 }
-

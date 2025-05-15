@@ -1,12 +1,9 @@
-package com.example.myapplication3.adapter;
+package com.example.myapplication3;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import com.example.myapplication3.model.Yemek;
-import com.example.myapplication3.ui.yemek.YemekGunuFragment;
 
 import java.util.List;
 
