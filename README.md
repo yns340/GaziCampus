@@ -31,3 +31,5 @@ enabling personalized feedback and data persistence.
 
 This project was originally developed as part of a group collaboration.  
 This version is a **personal fork** that highlights my individual contributions.
+
+**This project was completed as a second-year term project at Gazi University.**
