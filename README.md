@@ -37,7 +37,6 @@ This version is a **personal fork** that highlights my individual contributions.
 **This project was completed as a second-year term project at Gazi University.**
 
 ## Screenshots
-## Screenshots
 
 <div align="center">
 
