@@ -37,9 +37,21 @@ This version is a **personal fork** that highlights my individual contributions.
 **This project was completed as a second-year term project at Gazi University.**
 
 ## Screenshots
+## Screenshots
 
-![IMG_9280](https://github.com/user-attachments/assets/0d008a1e-e1d7-491c-a369-1f242114f320)
-![IMG_9281](https://github.com/user-attachments/assets/c17e64c1-192e-44af-9779-80fd0bab8d54)
-![IMG_9282](https://github.com/user-attachments/assets/53bd8510-4c84-451e-b18f-7808cacfe18f)
+<div align="center">
+
+<img width="532" height="846" alt="Ekran Resmi 2025-09-18 11 59 40" src="https://github.com/user-attachments/assets/f35465c0-81f5-4d3f-ad36-28d4657417d1" />
+
+<br/>
+
+<img width="1046" height="761" alt="Ekran Resmi 2025-09-18 12 01 13" src="https://github.com/user-attachments/assets/dc9ec9d8-1372-4565-87e4-5bfcc05fc382" />
+
+<br/>
+
+<img width="950" height="697" alt="Ekran Resmi 2025-09-18 12 05 58" src="https://github.com/user-attachments/assets/46bcacff-ed18-4711-9b3c-cd384ce59bd1" />
+
+</div>
+
 
 
