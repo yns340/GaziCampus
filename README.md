@@ -26,6 +26,8 @@ enabling personalized feedback and data persistence.
 - Java (for Android)
 - XML (layouts)
 - Android Studio
+- API Integration
+
 
 ## Credits
 
@@ -33,3 +35,11 @@ This project was originally developed as part of a group collaboration.
 This version is a **personal fork** that highlights my individual contributions.
 
 **This project was completed as a second-year term project at Gazi University.**
+
+## Screenshots
+
+![IMG_9280](https://github.com/user-attachments/assets/0d008a1e-e1d7-491c-a369-1f242114f320)
+![IMG_9281](https://github.com/user-attachments/assets/c17e64c1-192e-44af-9779-80fd0bab8d54)
+![IMG_9282](https://github.com/user-attachments/assets/53bd8510-4c84-451e-b18f-7808cacfe18f)
+
+
